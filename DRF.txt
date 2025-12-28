@@ -1,0 +1,61 @@
+How to activate python environment : 
+
+1. pip3 install virtualenv
+2. python3 -m venv venv
+3. source ./venv/bin/activate
+4. pip install django
+5. django-admin --version
+6. django-admin startproject core .
+The . means “create inside this directory” (so no nested folders).
+7. python manage.py startapp main
+(Create an app watchlist_app & added in setting in Installed_apps)
+8. Create Models in model.py
+9. Register model to admin panel
+
+Note : 
+# Step 1: You change models.py
+python manage.py makemigrations
+
+# Step 2: You apply changes to the actual DB
+python manage.py migrate
+
+python manage.py sqlmigrate watchlist_app 0001_initial
+//That shows the ALTER TABLE (or CREATE TABLE) SQL. If sqlmigrate shows adding the column but migrate did not apply it, note any errors shown by migrate.
+
+
+// DRF :
+
+Concepts : 1. Serialization.       2. Deserialization
+
+   (Complex datatype)              (Python Native datatype)
+    Model Objects       ---------->  Python Dictionary   ------------->   Json Data
+                      Serialization                      Render into Json
+                      <--------------
+                      Deserialization
+
+
+// 
+#Types of Serializer
+  1. serializers.Serializer
+  2. serializers.ModelSerializer
+
+#Types of Views
+   1. Function based View(FBV). --- @api_view()
+   2. Clase based View (CBV)
+                   APIView ------> Generic views, Mixins, Concrete View Classes, ViewSets
+   
+   3. Working with API
+       DRF Browserable API, Postman, HTTPie
+
+          
+Section 5: Views and serializers
+
+** Serializers 
+   In Get request : We request from DB & Give the output
+   In POST And PUT request : We need to write create and update function in serializers which triggers after serializers.save()
+
+** Status Codes
+   
+   https://www.django-rest-framework.org/api-guide/status-codes/
+
+** APIView Class/ Class Based views
