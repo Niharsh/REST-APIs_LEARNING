@@ -1,6 +1,6 @@
 from ..models import WatchList, StreamPlatform, Review   
 from .serializers import WatchlistSerializer, StreamPlatformSerializer, ReviewSerializer
-from ..api.permissions import AdminOrReadOnly,ReviewUserOrReadOnly
+from ..api.permissions import IsAdminOrReadOnly,IsReviewUserOrReadOnly
 
 
 from rest_framework import generics
@@ -45,9 +45,9 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):  # type: ignore
+    def get_queryset(self):  
         pk = self.kwargs['pk']
         return Review.objects.filter(watchlist=pk)
     
@@ -55,10 +55,11 @@ class ReviewList(generics.ListAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [ReviewUserOrReadOnly]
+    permission_classes = [IsReviewUserOrReadOnly]
 
 
 class StreamPlatformAV(APIView):
+    permission_classes=[IsAdminOrReadOnly]
     def get(self, request):
         platform = StreamPlatform.objects.all()
         serializer = StreamPlatformSerializer(platform, many=True)
@@ -76,6 +77,7 @@ class StreamPlatformAV(APIView):
 
 
 class StreamPlatformDetailAV(APIView):
+    permission_classes=[IsAdminOrReadOnly]
     def get(self, request, pk):
         platform = StreamPlatform.objects.get(pk=pk)
         serializer = StreamPlatformSerializer(platform)
@@ -101,6 +103,7 @@ class StreamPlatformDetailAV(APIView):
 
     
 class WatchlistAV(APIView):
+    permission_classes=[IsAdminOrReadOnly]
     def get(self, request):
         watchlist = WatchList.objects.all()
         serializer = WatchlistSerializer(watchlist, many=True)
@@ -115,6 +118,7 @@ class WatchlistAV(APIView):
     
 
 class WatchDetailAV(APIView):
+    permission_classes=[IsAdminOrReadOnly]
     def get(self, request, pk):
         try:
             watchlist = WatchList.objects.get(pk=pk)
