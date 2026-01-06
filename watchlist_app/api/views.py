@@ -4,6 +4,7 @@ from ..api.permissions import IsAdminOrReadOnly,IsReviewUserOrReadOnly
 from .throttling import ReviewListThrottle, ReviewCreateThrottle
 
 
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -12,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
+from rest_framework import filters
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -65,6 +67,9 @@ class ReviewList(generics.ListAPIView):
     serializer_class = ReviewSerializer
     # permission_classes = [IsAuthenticated]
     throttle_classes = [ReviewListThrottle, AnonRateThrottle]
+
+    filter_backends=[DjangoFilterBackend]   #review/?active=true&review_user__username=niharsh
+    filterset_fields=['review_user__username','active']
 
     def get_queryset(self):  
         pk = self.kwargs['pk']
@@ -120,6 +125,12 @@ class StreamPlatformDetailAV(APIView):
         platform = StreamPlatform.objects.get(pk=pk)
         platform.delete()
         return Response(status="204")
+    
+class watchlistGV(generics.ListAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = WatchlistSerializer
+    filter_backends=[filters.OrderingFilter]
+    ordering_fields=['avg_rating'] #to sort by avg_rating use ?ordering=avg_rating or ?ordering=-avg_rating for descending order
 
 
     
