@@ -1,6 +1,7 @@
 from ..models import WatchList, StreamPlatform, Review   
 from .serializers import WatchlistSerializer, StreamPlatformSerializer, ReviewSerializer
 from ..api.permissions import IsAdminOrReadOnly,IsReviewUserOrReadOnly
+from .throttling import ReviewListThrottle, ReviewCreateThrottle
 
 
 from rest_framework import generics
@@ -10,14 +11,31 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
+
 from django.core.exceptions import ObjectDoesNotExist
 
 
+class UserReview(generics.ListAPIView):
+    # queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    # permission_classes = [IsAuthenticated]
+
+    # def get_queryset(self):  
+    #     username = self.kwargs['username']
+    #     return Review.objects.filter(review_user__username=username)
+
+    #In this we are using query params that is ?username=niharsh 
+    # and in above we are using url params that is /user/niharsh/
+    def get_queryset(self):
+        username=self.request.query_params.get('username',None)
+        return Review.objects.filter(review_user__username=username)
 
 
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
     permission_classes=[IsAuthenticated]
+    throttle_classes = [ReviewCreateThrottle]
 
     def get_queryset(self):
         return Review.objects.all()
@@ -46,6 +64,7 @@ class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     # permission_classes = [IsAuthenticated]
+    throttle_classes = [ReviewListThrottle, AnonRateThrottle]
 
     def get_queryset(self):  
         pk = self.kwargs['pk']
@@ -56,6 +75,8 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsReviewUserOrReadOnly]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'review-detail'
 
 
 class StreamPlatformAV(APIView):
