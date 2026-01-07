@@ -2,6 +2,7 @@ from ..models import WatchList, StreamPlatform, Review
 from .serializers import WatchlistSerializer, StreamPlatformSerializer, ReviewSerializer
 from ..api.permissions import IsAdminOrReadOnly,IsReviewUserOrReadOnly
 from .throttling import ReviewListThrottle, ReviewCreateThrottle
+from .pagination import WatchlistPagination, WatchlistLimitOffsetPagination, WatchlistCursorPagination
 
 
 from django_filters.rest_framework import DjangoFilterBackend
@@ -131,6 +132,7 @@ class watchlistGV(generics.ListAPIView):
     serializer_class = WatchlistSerializer
     filter_backends=[filters.OrderingFilter]
     ordering_fields=['avg_rating'] #to sort by avg_rating use ?ordering=avg_rating or ?ordering=-avg_rating for descending order
+    pagination_class=WatchlistCursorPagination
 
 
     
