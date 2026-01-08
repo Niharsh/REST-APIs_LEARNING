@@ -1,77 +1,184 @@
-# IMDB API Clone With DRF
+# LEARN-DRF 🎯  
+*A complete Django REST Framework learning project*
 
-<h3>📝 Reference Reading Links (Arranged According To Lectures)</h3>
-<br>
+This repository represents my **end-to-end learning journey with Django REST Framework (DRF)**.  
+I built this project step by step while learning backend development — from Django basics to advanced DRF concepts like **permissions, pagination, throttling, and authentication**.
 
-<b>🎥 Understanding REST API</b>
-<ul>
-    <li>https://towardsdatascience.com/introduction-to-rest-apis-90b5d9676004</li>
-</ul>
-<br>
+This project is focused on **learning by building**, not just theory.
 
-<b>🎥 Basic Django Setup</b>
-<ul>
-    <li>https://www.djangoproject.com/</li>
-    <li>https://code.visualstudio.com/download</li>
-    <li>https://www.tabnine.com/</li>
-</ul>
-<br>
+---
 
-<b>🎥 DRF Introduction</b>
-<ul>
-    <li>https://www.django-rest-framework.org/</li>
-</ul>
-<br>
+## 📖 Project Overview
 
-<b>🎥 Django Relationships</b>
-<ul>
-    <li>https://docs.djangoproject.com/en/3.1/topics/db/examples/</li>
-</ul>
-<br>
+The project is built around a simple **Watchlist / Review system**, where users can:
+- Register and authenticate
+- Access APIs securely
+- Perform CRUD operations
+- Experience real-world backend concepts like rate limiting and permissions
 
-<b>🎥 Postman</b>
-<ul>
-    <li>https://www.postman.com/</li>
-    <li>https://www.postman.com/downloads/</li>
-</ul>
-<br>
+During development, I continuously tested APIs using **Postman** and improved the structure as I learned new DRF concepts.
 
-<b>🎥 Basic Authentication</b>
-<ul>
-    <li>https://www.base64encode.org/</li>
-    <li>https://www.toolsqa.com/postman/basic-authentication-in-postman/</li>
-</ul>
-<br>
+---
 
-<b>🎥 JWT Authentication</b>
-<ul>
-<li>https://jwt.io/</li>
-<li>https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6</li>
-<li>https://simpleisbetterthancomplex.com/tutorial/2018/12/19/how-to-use-jwt-authentication-with-django-rest-framework.html</li>
-<li>https://medium.com/django-rest/django-rest-framework-jwt-authentication-94bee36f2af8https://stackoverflow.com/questions/61547014/restful-uri-trailing-slash-or-no-trailing-slash</li>
-</ul>
-<br>
+## 🧠 What I Learned & Implemented
 
-<b>🎥 Throttling Introduction</b>
-<ul>
-  <li>https://medium.com/analytics-vidhya/throttling-requests-with-django-rest-framework-for-different-http-methods-3ab0461044c</li>
-</ul>
-<br>
+Through this project, I learned and implemented:
 
-<b>🎥 Filtering, Searching, Ordering</b>
-<ul>
-  <li>https://django-filter.readthedocs.io/en/stable/</li>
-  <li>https://stackoverflow.com/a/36940373/7846238</li>
-</ul>
-<br>
+- Django project & app structure
+- Django ORM (no raw SQL)
+- Django REST Framework architecture
+- Serializers and validation
+- Function-based views → Class-based generic views
+- Token-based authentication
+- Custom permissions
+- Pagination for large datasets
+- API throttling (rate limiting)
+- Modular API structure (`api/` folders)
+- Debugging and testing APIs using Postman
+- Writing clean and reusable code
+- Git & GitHub workflow
 
-<b>🎥 Browsable API Update</b>
-<ul>
-  <li>https://stackoverflow.com/questions/11898065/how-to-disable-admin-style-browsable-interface-of-django-rest-framework</li>
-</ul>
-<br>
+---
 
-<b>🎥 Test Driven Development</b>
-<ul>
-  <li>https://medium.com/@ksarthak4ever/test-driven-development-tdd-in-django-and-django-rest-framework-drf-a889a8068cb7</li>
-</ul>
+## 🚀 Key Features
+
+### 👤 User Management (`user_app`)
+- User registration
+- User login
+- Token generation
+- Authentication-based access control
+
+### 📺 Watchlist APIs (`watchlist_app`)
+- CRUD operations on watchlist items
+- Serializer-based clean API responses
+- Custom permissions
+- Pagination support
+- Throttling to limit API requests
+- Well-structured API routing
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Django, Django REST Framework
+- **Language:** Python 3
+- **Database:** SQLite (development)
+- **Authentication:** Token Authentication
+- **Tools:** Postman, Git, GitHub
+
+---
+📂 Project Structure
+```text
+LEARN-DRF/
+├── user_app/
+│   ├── api/
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   ├── models.py
+│   ├── tests.py
+│
+├── watchlist_app/
+│   ├── api/
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── permissions.py
+│   │   ├── pagination.py
+│   │   ├── throttling.py
+│   ├── models.py
+│   ├── tests.py
+│
+├── watchmate/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   ├── wsgi.py
+│
+├── db.sqlite3
+├── manage.py
+├── requirements.txt
+├── README.md
+```
+
+## ⚙️ Setup & Installation
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/your-username/LEARN-DRF.git
+cd LEARN-DRF
+```
+
+### 2️⃣ Create and activate virtual environment
+```bash
+python -m venv menv
+source menv/bin/activate   # Linux/Mac
+menv\Scripts\activate      # Windows
+```
+
+### 3️⃣ Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Run migrations
+```bash
+python manage.py migrate
+```
+
+### 5️⃣ Create superuser (optional)
+```bash
+python manage.py createsuperuser
+```
+
+### 6️⃣ Start the development server
+```bash
+python manage.py runserver
+```
+
+---
+
+## 🔐 Authentication
+
+This project uses **Token Authentication**.
+
+After login, include the token in request headers:
+
+```http
+Authorization: Token your_token_here
+```
+
+---
+
+## 🧪 API Testing
+
+All APIs were tested using **Postman**:
+
+- Authentication flow verified
+- Permission checks tested
+- Throttling limits validated
+- Pagination responses checked
+- Error handling understood
+
+---
+
+## 🎯 Why This Project Matters
+
+This project shows:
+
+- Consistency in learning
+- Practical backend understanding
+- Ability to read documentation and implement features
+- Real-world DRF concepts beyond basics
+
+It is **not a production app** — it is a **strong foundation project**.
+
+---
+
+## 🔮 Future Improvements
+
+- JWT authentication
+- API documentation (Swagger)
+- Deployment to cloud (Render / Railway / AWS)
+- Frontend integration
+- Better test coverage
